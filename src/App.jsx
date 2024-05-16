@@ -7,6 +7,22 @@ import { db } from './data/db';
 function App() {
 
   const [data, setData] = useState(db);
+  const [cart, setCart] = useState([]);
+
+  function addToCart(item) {
+    // const guitarExists2 = cart.includes(item);
+    // console.log(guitarExists2);
+    const guitarExists = cart.findIndex(guitar => guitar.id === item.id);
+    if(guitarExists >= 0) { //exists
+      const updatedCart = [...cart];
+      updatedCart[guitarExists].quantity++;
+      setCart(updatedCart);
+    } else {
+      item.quantity = 1;
+      setCart([...cart, item]);
+    }
+
+  }
 
   // useEffect(() => {
   //   console.log('Component ready, populating db');
@@ -24,10 +40,12 @@ function App() {
         <h2 className="text-center">Our Collection</h2>
 
         <div className="row mt-5">
-          {data.map(guitar => (
+          {data.map(guitarItem => (
             <Guitar
-            key={guitar.id}
-              guitar={guitar}
+              key={guitarItem.id}
+              guitarProp={guitarItem}
+              setCartProp={setCart}
+              addToCartProp={addToCart}
             />
           ))}
         </div>

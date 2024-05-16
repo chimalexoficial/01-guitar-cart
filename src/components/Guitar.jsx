@@ -1,12 +1,9 @@
 
 
-function Guitar({ guitar }) {
+function Guitar({ guitarProp, addToCartProp }) {
 
-  const {id, name, image, description, price} = guitar;
+  const { id, name, image, description, price } = guitarProp;
 
-  const handleClick = (id) => {
-    console.log(id);
-  }
 
   return <>
     <div id={id} className="col-md-6 col-lg-4 my-4 row align-items-center">
@@ -17,10 +14,10 @@ function Guitar({ guitar }) {
         <h3 className="text-black fs-4 fw-bold text-uppercase">{name}</h3>
         <p>{description}</p>
         <p className="fw-black text-primary fs-3">{`$ ${price}`}</p>
-        <button 
-        type="button" 
-        className="btn btn-dark w-100"
-        onClick={() => handleClick(guitar)}>Add to cart</button>
+        <button
+          type="button"
+          className="btn btn-dark w-100"
+          onClick={() => addToCartProp(guitarProp)}>Add to cart</button>
       </div>
     </div>
   </>
