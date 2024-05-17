@@ -13,11 +13,13 @@ function App() {
     // const guitarExists2 = cart.includes(item);
     // console.log(guitarExists2);
     const guitarExists = cart.findIndex(guitar => guitar.id === item.id);
-    if(guitarExists >= 0) { //exists
+    console.log(guitarExists);
+
+    if(guitarExists >= 0) { //exists in cart?
       const updatedCart = [...cart];
       updatedCart[guitarExists].quantity++;
       setCart(updatedCart);
-    } else {
+    } else { // -1? not exist
       item.quantity = 1;
       setCart([...cart, item]);
     }
@@ -34,7 +36,8 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header
+       cartProp={cart}/>
 
       <main className="container-xl mt-5">
         <h2 className="text-center">Our Collection</h2>
