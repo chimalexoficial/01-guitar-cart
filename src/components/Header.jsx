@@ -1,11 +1,12 @@
+import { useMemo } from "react";
 
-
-function Header({ cartProp }) {
+function Header({ cartProp, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }) {
   console.log(cartProp);
 
   // derivative state
-  const isEmpty = () => (cartProp.length === 0);
-  const cartTotal = () => cartProp.reduce((total, item) => total + (item.quantity * item.price), 0);
+  // const isEmpty = () => (cartProp.length === 0);
+  const isEmpty = () => useMemo(() => cartProp.length === 0, [cartProp]);
+  const cartTotal = useMemo(() => cartProp.reduce((total, item) => total + (item.quantity * item.price), 0), [cartProp]);
 
 
 
@@ -50,16 +51,19 @@ function Header({ cartProp }) {
                                 {`$ ${price}`}
                               </td>
                               <td className="flex align-items-start gap-4">
-                                <button type="button" className="btn btn-dark">
+                                <button type="button" className="btn btn-dark"
+                                onClick={() => decreaseQuantity(id)}>
                                   -
                                 </button>
                                 {quantity}
-                                <button type="button" className="btn btn-dark">
+                                <button type="button" className="btn btn-dark"
+                                onClick={()=> increaseQuantity(id)}>
                                   +
                                 </button>
                               </td>
                               <td>
-                                <button className="btn btn-danger" type="button">
+                                <button className="btn btn-danger" type="button"
+                                onClick={() => removeFromCart(guitarItem.id)}>
                                   X
                                 </button>
                               </td>
@@ -70,12 +74,14 @@ function Header({ cartProp }) {
 
                     </tbody>
                   </table>
-                  <p className="text-end">Total: <span className="fw-bold">${cartTotal()}</span>
+                  <p className="text-end">Total: <span className="fw-bold">${cartTotal}</span>
                   </p>
                 </>}
 
 
-                <button className="btn btn-dark w-100 mt-3 p-2">Empty cart</button>
+                <button className="btn btn-dark w-100 mt-3 p-2"
+                onClick={clearCart}
+                >Empty cart</button>
               </div>
             </div>
           </nav>
